@@ -13,6 +13,18 @@ If a release is generated and published, `main.pdf` is automatically added to th
 
 For the release workflow it is important, that you grant the read/write permissions in Repo-Settings -> Actions -> General -> Workflow permissions
 
+### Version information
+
+The file `section/versinfo.tex` holds version information and it can be included in another .tex file with:
+```
+\input{section/versinfo.tex}
+```
+
+In a normal build it will print `DRAFT ` followed by date and time, e.g. `DRAFT 2023-03-06 13:32:10`.
+In a release build it will print the tag name, e.g. v0.0.1.
+
+An example can be found in the `demo.tex` file.
+
 ## Contributing
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
