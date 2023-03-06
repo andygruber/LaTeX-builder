@@ -1,0 +1,25 @@
+\documentclass{article}
+\usepackage[paperheight=16cm, paperwidth=12cm,includehead,nomarginpar,textwidth=10cm,headheight=10mm,]{geometry}
+\usepackage{fancyhdr}
+\usepackage{datetime2}
+
+\begin{document}
+% Set the page style to "fancy"...
+\pagestyle{fancy}
+\title{Single-sided document}
+\author{Andreas Gruber}
+\date{\input{section/versinfo.tex}}
+\fancyhf{} % clear existing header/footer entries
+% We don't need to specify the O coordinate
+\fancyhead[R]{Hello}
+\fancyfoot[L]{\thepage}
+\fancyfoot[C]{\input{section/versinfo.tex}}
+\maketitle
+\section{Introduction}
+This is generated from demo.tex. demo.tex can be safely removed.\\\\
+The upload to github releases is done automatically only from main.tex/.pdf when you create and publish a release.\\\\
+So create a main.tex and you are good to go.
+\newpage
+\section{Continued...}
+\end{document}
+% original example from overleaf.com

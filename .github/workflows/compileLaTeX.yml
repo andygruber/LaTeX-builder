@@ -1,0 +1,56 @@
+name: Build LaTeX document  
+
+on:
+  push:
+    branches: [ "main", "release/*" ]
+  pull_request:
+    branches: [ "main", "release/*" ]
+  release:
+    types: [published]
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v3
+
+      - name: Add version if real release
+        if: github.event_name == 'release'
+        run: echo ${{ github.event.release.tag_name }} > section/versinfo.tex
+
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: "*.tex"
+          glob_root_file: true
+
+      - name: Upload PDF file
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDF
+          path: "*.pdf"
+
+  release:
+    if: github.event_name == 'release'
+    name: Release
+    runs-on: ubuntu-latest
+    needs: build_latex
+    steps:
+
+    - name: Download artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: PDF
+        path: ./
+
+    - name: Upload to Release
+      id: upload_to_release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: main.pdf
+        asset_name: ${{ github.event.repository.name }}_${{ github.event.release.tag_name }}.pdf
+        asset_content_type: application/pdf
