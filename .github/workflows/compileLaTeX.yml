@@ -2,9 +2,9 @@ name: Build LaTeX document
 
 on:
   push:
-    branches: [ "main", "release/*" ]
+    branches: [ "main", "release/*", "develop", "develop/*" ]
   pull_request:
-    branches: [ "main", "release/*" ]
+    branches: [ "main", "release/*", "develop", "develop/*" ]
   release:
     types: [published]
 
@@ -17,7 +17,7 @@ jobs:
 
       - name: Add version if real release
         if: github.event_name == 'release'
-        run: echo ${{ github.event.release.tag_name }} > section/versinfo.tex
+        run: echo '\newcommand\docversion{${{ github.event.release.tag_name }}}' > section/versinfo.tex
 
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
