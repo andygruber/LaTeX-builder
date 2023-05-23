@@ -2,18 +2,19 @@
 \usepackage[paperheight=16cm, paperwidth=12cm,includehead,nomarginpar,textwidth=10cm,headheight=10mm,]{geometry}
 \usepackage{fancyhdr}
 \usepackage{datetime2}
+\input{section/versinfo.tex}
 
 \begin{document}
 % Set the page style to "fancy"...
 \pagestyle{fancy}
 \title{Single-sided document}
 \author{Andreas Gruber}
-\date{\input{section/versinfo.tex}}
+\date{\docversion}
 \fancyhf{} % clear existing header/footer entries
 % We don't need to specify the O coordinate
 \fancyhead[R]{Hello}
 \fancyfoot[L]{\thepage}
-\fancyfoot[C]{\input{section/versinfo.tex}}
+\fancyfoot[C]{\docversion}
 \maketitle
 \section{Introduction}
 This is generated from demo.tex. demo.tex can be safely removed.\\\\
