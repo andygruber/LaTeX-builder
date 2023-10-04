@@ -1,39 +1,56 @@
-# LaTeX-builder
-A template repo to easily build and release LaTeX documents. Just fork it and use it.
+# LaTeX-Builder Documentation
+
+## Overview
+LaTeX-Builder is a template repository designed to streamline the process of building and releasing LaTeX documents.
+You can either fork this repository or directly use the "Use this template" button on GitHub to get started.
 
 ## Usage
 
-The pipeline builds (actions) all *.tex files from the repository root and the pdf files can be downloaded from the artifacts of the build.
+### **GitHub Action Workflow**
 
-The pipeline is running automatically after commits to `main` or `release/*` branches. The same is true for pull requests to those branches.
+- **Building**: Automatically compiles all `*.tex` files located in the repository root.
+- **Accessing Outputs**: Post-compilation, the resulting PDF files can be accessed from the build artifacts.
+- **Triggers**: The workflow is activated after commits to the `main` branch, any `release/*` branches, or upon pull requests to these branches.
+- **Releases**: On creating and publishing a release, the any PDF file will be appended to the release. If it is just one PDF, it will be added in the form of `<reponame>_<tagname>.pdf` (e.g., `LaTeX-builder_v0.0.1.pdf`). If there are more PDFs than one, the original name of the PDF will be appended after the `tagname` (e.g., `LaTeX-builder_v0.0.1_demo.pdf`).
 
-If a release is generated and published, `main.pdf` is automatically added to the release as `<reponame>_<tagname>.pdf`, e.g., `LaTeX-builder_v0.0.1.pdf`. Therefore, if the release workflow is desired, you need to use `main.tex` as your main LaTeX document.
+#### Setup
+To ensure the release workflow functions optimally, grant the necessary read/write permissions by navigating to: `Repo-Settings -> Actions -> General -> Workflow permissions`.
 
-### Initialization
+### **Local Compilation with VS Code**
 
-For the release workflow it is important, that you grant the read/write permissions in Repo-Settings -> Actions -> General -> Workflow permissions
+1. **Installation**:
+   - Download and install [VS Code](https://code.visualstudio.com/download).
+   - Ensure a LaTeX distribution is in place. For Windows:
+     - Download `TinyTex` or `TinyTex-2` from [here](https://github.com/rstudio/tinytex-releases/).
+     - Extract the downloaded package.
+     - Add `<extracted-path>\bin\windows` to your system or user PATH variable.
+   
+2. **Configuration**:
+   - On launching VS Code, you might be prompted to install recommended extensions, such as `LaTeX Workshop`.
+   - If the PATH variable is set correctly, VS Code will automatically detect the LaTeX distribution and compile LaTeX projects.
+   - **For Linux Users**: Consider using a Docker image as your LaTeX distribution. In the `LaTeX Workshop` extension settings within VS Code:
+     - Enable `latex-workshop.docker.enabled`.
+     - Set `latex-workshop.docker.image.latex` to `ghcr.io/xu-cheng/texlive-full`.
 
-### Version information
+### **Versioning**
 
-The file `section/versinfo.tex` holds version information and it can be included in another .tex file with:
-```
+The `section/versinfo.tex` file contains version details. To incorporate it in another `.tex` file, use:
+```latex
 \input{section/versinfo.tex}
 ```
+During standard builds (be it local or via GitHub Action), the output will display `DRAFT` followed by the date and time (e.g., `DRAFT 2023-03-06 13:32:10`). For release builds, the tag name will be shown (e.g., `v0.0.1`).
 
-In a normal build it will print `DRAFT ` followed by date and time, e.g. `DRAFT 2023-03-06 13:32:10`.
-In a release build it will print the tag name, e.g. v0.0.1.
-
-An example can be found in the `demo.tex` file.
+For a hands-on example, refer to the `demo.tex` file.
 
 ## Contributing
 
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Your contributions play a pivotal role in enhancing the open-source community, making it a hub for learning, inspiration, and innovation. Every contribution, big or small, is deeply appreciated.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+**Steps to Contribute**:
+1. Fork the Project.
+2. Create your Feature Branch: `git checkout -b feature/YourFeatureName`.
+3. Commit your Changes: `git commit -m 'Describe your change'`.
+4. Push to the Branch: `git push origin feature/YourFeatureName`.
+5. Open a Pull Request.
 
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+For suggestions or enhancements, either submit a pull request or open an issue with the "enhancement" tag. If you find value in this project, kindly star it. Your support means a lot to me!
