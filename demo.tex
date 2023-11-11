@@ -1,8 +1,29 @@
 \documentclass{article}
 \usepackage[paperheight=16cm, paperwidth=12cm,includehead,nomarginpar,textwidth=10cm,headheight=10mm,]{geometry}
 \usepackage{fancyhdr}
+\usepackage{hyperref}
 \usepackage{datetime2}
-\input{section/versinfo.tex}
+\input{data/versinfo.tex}
+\input{data/docdata.tex}
+
+\hypersetup{
+    pdftitle={\myTitle},
+    pdfsubject={\mySubject},
+    pdfauthor={\myNameInclTitle},
+    breaklinks, % permits line breaks for long links
+    bookmarksnumbered,        % ... and include section numbers
+    linktocpage,        % "make page number, not text, be link on TOC ..."
+    colorlinks,            % yes ...
+    linkcolor=black,        % normal internal links;
+    anchorcolor=black,   
+    citecolor=black,
+    urlcolor=blue,        % quite common
+    pdfstartview={Fit},        % "Fit" fits the page to the window
+    pdfpagemode=UseOutlines,    % open bookmarks in Acrobat
+    plainpages=false,      % avoids duplicate page number problem
+    pdflang={\PDFdocumentLang},
+    pdfkeywords={\docversion}
+}
 
 \begin{document}
 % Set the page style to "fancy"...
