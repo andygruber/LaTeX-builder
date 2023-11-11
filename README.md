@@ -34,9 +34,9 @@ To ensure the release workflow functions optimally, grant the necessary read/wri
 
 ### **Versioning**
 
-The `section/versinfo.tex` file contains version details. To incorporate it in another `.tex` file, use:
+The `data/versinfo.tex` file contains version details. To incorporate it in another `.tex` file, use:
 ```latex
-\input{section/versinfo.tex}
+\input{data/versinfo.tex}
 ```
 During standard builds (be it local or via GitHub Action), the output will display `DRAFT` followed by the date and time (e.g., `DRAFT 2023-03-06 13:32:10`). For release builds, the tag name will be shown (e.g., `v0.0.1`).
 

@@ -15,9 +15,16 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v3
 
-      - name: Add version if real release
-        if: github.event_name == 'release'
-        run: echo '\newcommand\docversion{${{ github.event.release.tag_name }}}' > section/versinfo.tex
+      - name: Add version or PR info
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            echo '\newcommand\docversion{${{ github.event.release.tag_name }}}' > data/versinfo.tex
+          elif [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo '\newcommand\docversion{PR\#${{ github.event.pull_request.number }}; \today\hspace{0.1cm}\DTMcurrenttime}' > data/versinfo.tex
+          else
+            SHASHORT=$(echo ${{ github.sha }} | cut -c1-7)
+            echo "\newcommand\docversion{Git-sha ${SHASHORT}; \today\hspace{0.1cm}\DTMcurrenttime}" > data/versinfo.tex
+          fi
 
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
@@ -36,6 +43,10 @@ jobs:
     
             # Generate the base name for the PDFs
             base_name="${GITHUB_REPOSITORY##*/}"
+            # set base_name to custom value if required
+            # base_name='my custom pdf file name'
+
+            # Add tag to file name in case of release
             if [ "$GITHUB_EVENT_NAME" == "release" ]; then
                 base_name="${base_name}_${{ github.event.release.tag_name }}"
             fi
@@ -45,7 +56,10 @@ jobs:
                 mv "${pdfs[0]}" "${base_name}.pdf"
                 exit 0
             fi
-    
+
+            # Uncomment if there can only be 1 PDF in this repository
+            # exit 1
+
             # If multiple PDFs are found, rename them with their original names appended
             for pdf in "${pdfs[@]}"; do
                 original_name=$(basename "$pdf" .pdf)
